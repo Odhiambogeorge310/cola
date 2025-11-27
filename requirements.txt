@@ -1,0 +1,9 @@
+pandas
+numpy
+streamlit
+streamlit-card
+streamlit-extras
+streamlit-option-menu
+matplotlib
+plotly
+openpyxl
