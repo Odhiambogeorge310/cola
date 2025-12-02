@@ -75,6 +75,16 @@ def preprocess(df):
     # Trend label
     df["Trend"] = np.where(df["Close"] > df["Close"].shift(1), "Uptrend", "Downtrend")
     return df
+
+#function for editing huge figures
+def format_large_number(num):
+    for unit in ["", "K", "M", "B", "T", "Q"]:
+        if abs(num) < 1000:
+            return f"{num:,.2f}{unit}"
+        num /= 1000
+    return f"{num:,.2f}Q"
+
+
 #necessary kPIs
 def compute_kpis(df):
     kpis = {}
@@ -180,11 +190,12 @@ with c1:
 
 with c2:
     st.info("Avg Close", icon="💰")
-    st.metric(label="Closing averageg $", value=f"${kpis['avg_close']:,.2f}")
+    st.metric(label="Closing average $", value=f"${kpis['avg_close']:,.2f}")
 
 with c3:
     st.info("Total Volume", icon="💰")
-    st.metric(label="Volume $", value=f"{kpis['total_volume']:,}")
+    st.metric(label="Volume $", value=format_large_number(kpis['total_volume']))
+    
 
 with c4:
     st.info("Period Return", icon="💰")
