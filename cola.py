@@ -44,6 +44,7 @@ def load_data(path="Coca_Cola_historical_data"):
     """
     df = pd.read_csv(path)
     # Data Preprocessing
+    df["Date"] = pd.to_datetime(df["Date"], errors="coerce", utc=True).dt.tz_localize(None)
     df.columns = [c.strip().capitalize() for c in df.columns]
 
     # Ensure required columns exist
@@ -53,6 +54,7 @@ def load_data(path="Coca_Cola_historical_data"):
         raise ValueError(f"Missing required columns: {missing}")
 
     # converting date type
+    df_raw["Date"] = pd.to_datetime(df_raw["Date"], errors="coerce", utc=True).dt.tz_localize(None)
     df["Date"] = pd.to_datetime(df["Date"], errors="coerce")
     df = df.dropna(subset=["Date"]).sort_values("Date").reset_index(drop=True)
 
